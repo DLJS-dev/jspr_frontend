@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 
 import GeolocationForm from "./components/GeolocationForm"
+import LogInContainer from "./components/LogInContainer"
+import SignUpContainer from "./components/SignUpContainer"
 
 class App extends Component {
   render() {
@@ -10,11 +12,12 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
         </header>
-        <p className="App-intro">
+        <div className="App-intro">
+          <LogInContainer />
+          <SignUpContainer />
           <GeolocationForm />
-        </p>
+        </div>
       </div>
     );
   }
