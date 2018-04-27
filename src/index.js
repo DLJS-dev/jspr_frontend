@@ -4,17 +4,17 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-import createStore from "redux";
-import Provider from "react-redux";
+import createStore from "./createStore";
 
-// const store = createStore(reducer)
+const store = createStore(XXXXXXreducerXXXXXXXXX)
 
-ReactDOM.render(
-  // <Provider>
-    <App />
-  // </Provider>
-  ,
-  document.getElementById('root')
-);
+export function render() {
+
+  ReactDOM.render(
+    <App store={store}/>,
+    document.getElementById('root')
+  );
+
+}
 
 registerServiceWorker();
