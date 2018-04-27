@@ -6,15 +6,18 @@ import registerServiceWorker from './registerServiceWorker';
 
 import createStore from "./createStore";
 
-const store = createStore(XXXXXXreducerXXXXXXXXX)
+// const store = createStore(XXXXXXreducerXXXXXXXXX)
 
 export function render() {
 
   ReactDOM.render(
-    <App store={store}/>,
+    <App />,
+
     document.getElementById('root')
   );
 
 }
+
+render();
 
 registerServiceWorker();
