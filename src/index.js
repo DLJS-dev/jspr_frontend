@@ -5,19 +5,30 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 import createStore from "./createStore";
+import currentUser from "./reducers/currentUser";
 
-// const store = createStore(XXXXXXreducerXXXXXXXXX)
+
+const store = createStore(currentUser)
+//
+// export function render() {
+//
+//   ReactDOM.render(
+//     <App />,
+//
+//     document.getElementById('root')
+//   );
+//
+// }
+//
+// render();
 
 export function render() {
-
   ReactDOM.render(
-    <App />,
-
+    <App store={store}/>,
     document.getElementById('root')
   );
+};
 
-}
-
-render();
+store.dispatch({ type: '@@INIT' });
 
 registerServiceWorker();

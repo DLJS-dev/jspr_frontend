@@ -5,6 +5,8 @@ export default function createStore(reducer) {
 
   function dispatch(action) {
     state = reducer(state, action);
+    console.log(`the state is ${state.userID}`);
+    console.log(`the action is ${action.type}`);
     render();
   };
 

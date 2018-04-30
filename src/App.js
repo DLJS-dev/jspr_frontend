@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import GeolocationForm from "./components/GeolocationForm"
 import LogInContainer from "./components/LogInContainer"
 import SignUpContainer from "./components/SignUpContainer"
+import ProfileSetUp from "./components/ProfileSetUp"
 
 class App extends Component {
   render() {
@@ -14,9 +14,9 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
         </header>
         <div className="App-intro">
-          <LogInContainer />
+          <LogInContainer store={this.props.store}/>
           <SignUpContainer />
-          <GeolocationForm />
+          <ProfileSetUp />
         </div>
       </div>
     );

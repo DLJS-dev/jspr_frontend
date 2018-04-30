@@ -1,11 +1,10 @@
 import React from "react";
 import CONFIG from "../config"
 import { Button, Checkbox, Form, Input } from 'semantic-ui-react';
-import WeatherContainer from "./WeatherContainer"
 
 export default class GeolocationForm extends React.Component{
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state={
       streetInput: "",
@@ -20,18 +19,20 @@ export default class GeolocationForm extends React.Component{
     this.setState({
       [event.target.name]: event.target.value
     })
+    let userAddress = `${this.state.streetInput} ${this.state.cityInput} ${this.state.stateInput} ${this.state.zipcodeInput}`
+    this.props.setAddress(userAddress)
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    let userAddress = `${this.state.streetInput} ${this.state.cityInput} ${this.state.stateInput} ${this.state.zipcodeInput}`
-    const BASE_URL = `https://maps.googleapis.com/maps/api/geocode/json?address=${userAddress}&key=${CONFIG.GOOG_GEO_KEY}`
-    fetch(BASE_URL)
-      .then(res => res.json())
-      .then(json => this.setState({
-        geocodingData: json.results[0].geometry.location
-      }))
-  }
+  // handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   let userAddress = `${this.state.streetInput} ${this.state.cityInput} ${this.state.stateInput} ${this.state.zipcodeInput}`
+  //   const BASE_URL = `https://maps.googleapis.com/maps/api/geocode/json?address=${userAddress}&key=${CONFIG.GOOG_GEO_KEY}`
+  //   fetch(BASE_URL)
+  //     .then(res => res.json())
+  //     .then(json => this.setState({
+  //       geocodingData: json.results[0].geometry.location
+  //     }))
+  // }
 
   // showInput = (event) => {
   //   console.log(event.target.value)
@@ -98,14 +99,15 @@ export default class GeolocationForm extends React.Component{
 
     return(
       <div>
-        <Form onSubmit={this.handleSubmit}>
           <Form.Field>
+            <label>Street: </label>
             <Input type="text"
               placeholder="eg., 11 Broadway"
               name="streetInput"
               onChange={this.handleInput}/>
           </Form.Field>
           <Form.Field>
+            <label>City: </label>
             <Input type="text"
               placeholder="e.g., New York"
               name="cityInput"
@@ -113,17 +115,12 @@ export default class GeolocationForm extends React.Component{
           </Form.Field>
           {this.showStates()}
           <Form.Field>
+            <label> Zip Code: </label>
             <Input type="text"
               placeholder="e.g., 10004"
               name="zipcodeInput"
               onChange={this.handleInput}/>
           </Form.Field>
-          <Button type='submit'>Find Location</Button>
-        </Form>
-        <div>
-          <p>The weather at users location is: </p>
-          {this.state.geocodingData && <WeatherContainer geolocation={this.state.geocodingData} />}
-        </div>
       </div>
     )
   }
