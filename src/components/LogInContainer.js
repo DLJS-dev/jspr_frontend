@@ -1,22 +1,15 @@
 import React from "react";
 import { Button, Checkbox, Form, Input } from 'semantic-ui-react';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-const BASE_URL = "http://localhost:3000/api/v1/users"
+import { logIn } from "../actions/userActions"
 
-export default class LogInContainer extends React.Component{
+class LogInContainer extends React.Component{
   state = {
     username: "",
     password: "",
     rememberUser: false,
-    usersData: [],
-  }
-
-  componentDidMount = () => {
-    fetch(BASE_URL)
-      .then(res => res.json())
-      .then(json => this.setState({
-        usersData: json
-      }))
   }
 
   handleChange = event => {
@@ -25,16 +18,14 @@ export default class LogInContainer extends React.Component{
 
   handleLoginSubmit = event => {
     event.preventDefault();
-    let foundUser = this.state.usersData.find(users => {
-      return this.state.username === users.username
-    })
-    if(!foundUser) {
-      alert("User was not found!")
-    } else if(foundUser.userPassword !== this.state.password) {
-      alert("Password does not match account!")
-    } else {
-      this.props.store.dispatch({type: "USERID_ADD", id: foundUser.id})
+
+    const userBody = {
+      username: this.state.username,
+      password: this.state.password
     }
+
+    this.props.logIn(userBody)
+
   };
 
   handleCheckbox = () => {
@@ -48,7 +39,6 @@ export default class LogInContainer extends React.Component{
   // }
 
   render() {
-    console.log(this.state.usersData)
     return(
       <div>
         {this.props.errorMessage ? <div>{this.props.errorMessage}</div> : null}
@@ -76,3 +66,12 @@ export default class LogInContainer extends React.Component{
     )
   }
 }
+
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    logIn: logIn
+  }, dispatch)
+}
+
+export default connect(null, mapDispatchToProps)(LogInContainer)

@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Checkbox, Form, Input } from 'semantic-ui-react';
 import GeolocationForm from "./GeolocationForm";
 
-const BASE_URL = "http://localhost:3000/api/v1/users"
+const BASE_URL = "http://localhost:3000/api/v1/users/"
 
 export default class ProfileSetUp extends React.Component{
   state = {
@@ -26,8 +26,11 @@ export default class ProfileSetUp extends React.Component{
       wifi_name: this.state.wifiName,
       wifi_password: this.state.wifiPassword
     }
-    fetch(BASE_URL, {
-      method: "POST",
+    debugger
+    console.log(this.props.store.userID);
+    console.log(BASE_URL+this.props.store.userID)
+    fetch(BASE_URL+this.props.store.userID, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },

@@ -4,31 +4,18 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-import createStore from "./createStore";
-import currentUser from "./reducers/currentUser";
+import { Provider } from "react-redux";
+import store from "./createStore";
 
+// const store = createStore(rootReducer)
 
-const store = createStore(currentUser)
-//
-// export function render() {
-//
-//   ReactDOM.render(
-//     <App />,
-//
-//     document.getElementById('root')
-//   );
-//
-// }
-//
-// render();
+console.log("store", store)
 
-export function render() {
-  ReactDOM.render(
-    <App store={store}/>,
-    document.getElementById('root')
-  );
-};
-
-store.dispatch({ type: '@@INIT' });
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
 
 registerServiceWorker();

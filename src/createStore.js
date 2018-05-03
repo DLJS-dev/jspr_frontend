@@ -1,22 +1,33 @@
-import {render} from "./index";
+import reducer from "./reducers/index";
+import { createStore, applyMiddleware, compose } from "redux"
 
-export default function createStore(reducer) {
-  let state;
+import thunk from "redux-thunk";
 
-  function dispatch(action) {
-    state = reducer(state, action);
-    console.log(`the state is ${state.userID}`);
-    console.log(`the action is ${action.type}`);
-    render();
-  };
+const middleware = applyMiddleware(thunk);
 
-  function getState() {
-    return state;
-  }
+const store = createStore(
+  reducer,
+  compose(middleware, window.devToolsExtension ? window.devToolsExtension() : f => f
+));
 
-  return {
-    dispatch,
-    getState
-  };
+export default store;
 
-};//endofcreateStore
+// export default function createStore(reducer) {
+//
+//   function dispatch(action) {
+//     state = reducer(state, action);
+//     console.log(`the state is ${state.userID}`);
+//     console.log(`the action is ${action.type}`);
+//     render();
+//   };
+//
+//   function getState() {
+//     return state;
+//   }
+//
+//   return {
+//     dispatch,
+//     getState
+//   };
+//
+// };//endofcreateStore

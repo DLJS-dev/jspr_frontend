@@ -1,27 +1,17 @@
 import React from "react";
 import { Button, Form, Input } from 'semantic-ui-react';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-const BASE_URL = "http://localhost:3000/api/v1/users"
+import {signUp} from "../actions/userActions"
 
-export default class SignUpContainer extends React.Component{
+class SignUpContainer extends React.Component{
 
   state = {
     newUser: "",
     newUsername: "",
     newPassword: "",
     confirmPassword: "",
-    allUsernames: []
-  }
-
-  componentDidMount = () => {
-    fetch(BASE_URL)
-      .then(res => res.json())
-      .then(json => json.forEach(user => {
-        this.setState({
-          allUsernames: [...this.state.allUsernames, user.username]
-        })
-
-      }))
   }
 
 
@@ -35,27 +25,12 @@ export default class SignUpContainer extends React.Component{
     const userBody = {
       name: this.state.newUser,
       username: this.state.newUsername.toLowerCase(),
-      userPassword: this.state.newPassword
+      password: this.state.newPassword,
+      password_confirmation: this.state.confirmPassword
     }
-    if (this.state.allUsernames.includes(this.state.newUsername.toLowerCase() )) {
-      alert('This username is already taken');
-    } else if(this.state.newPassword !== this.state.confirmPassword) {
-      alert('Your passwords do not match');
-      this.setState({
-        newPassword: "",
-        confirmPassword: "",
-      })
-    } else {
-      fetch(BASE_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userBody)
-      })
-      .then(res => res.json())
-      .then(json => console.log(json))
-    }
+
+    this.props.signUp(userBody)
+
   };//endofhandleSignUpSubmit
 
   render() {
@@ -102,3 +77,11 @@ export default class SignUpContainer extends React.Component{
     )
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    signUp: signUp
+  }, dispatch)
+}
+
+export default connect(null, mapDispatchToProps)(SignUpContainer)
