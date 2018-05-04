@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+
 import LogInContainer from "./components/LogInContainer"
 import SignUpContainer from "./components/SignUpContainer"
 import ProfileSetUp from "./components/ProfileSetUp"
@@ -15,11 +17,15 @@ class App extends Component {
         <header className="App-header">
         </header>
         <div className="App-intro">
-          <LogInContainer store={this.props.store}/>
-          <SignUpContainer store={this.props.store}/>
-          <ProfileSetUp store={this.props.store}/>
-          <ProfileContainer />
-          <FriendsListContainer />
+          <Router>
+            <div>
+              <Route exact path="/" component={LogInContainer} />
+              <Route exact path="/signup" component={SignUpContainer} />
+              <Route exact path="/newuser" component={ProfileSetUp} />
+              <Route exact path="/profile" component={ProfileContainer} />
+              <Route exact path="/friends" component={FriendsListContainer} />
+            </div>
+          </Router>
         </div>
       </div>
     );
